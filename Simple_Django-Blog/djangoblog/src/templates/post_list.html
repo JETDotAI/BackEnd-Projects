@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class = 'col-sm-8 col-sm-offset-2'>
+		<h1>{{title}} </h1>
+	<form method = 'GET' action = ''>
+		<input type = 'text' name = 'query' placeholder = 'Search posts' value = '{{ request.GET.query }}'/>
+		<input type = 'submit' value = 'Search' />
+	</form>
+	{% for post in list_posts%}
+	<div class = "row">
+	  <div class="col-sm-12">
+		<div class="thumbnail">
+			{%if post.image %}
+			<img src = '{{ post.image.url }}' class = 'img-responsive' />
+			{% endif %}
+		  <div class="caption">
+			<h3><a href = '{{post.get_absolute_url}}'>{{post.title}}</a> 
+			<small class ='pull-right'>Posted {{ post.timestamp|timesince}} Ago</small></br> {% if user.is_active %}<p> Author:	{{post.author}}</p> {% endif %} </h3>
+			<h5> Date Published: {{post.publish}} </h5>
+			<p>{{post.content|linebreaks|truncatechars:120}}</p>
+			<a href= '{{post.get_absolute_url}}' class="btn btn-primary" role="button">View</a> 
+		  </div>
+		</div>
+	  </div>
+	<hr/>
+	</div>
+	
+	{% endfor %}
+	
+	<div class="pagination">
+    <span class="step-links">
+        {% if list_posts.has_previous %}
+            <a href="?{{page_request_var }}={{ list_posts.previous_page_number }}&query = {{ request.GET.query }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ list_posts.number }} of {{ list_posts.paginator.num_pages }}.
+        </span>
+
+        {% if list_posts.has_next %}
+            <a href="?page={{ list_posts.next_page_number }}&query = {{ request.GET.query }}">next</a>
+        {% endif %}
+    </span>
+    
+	</div>
+	</div>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{%extends "base.html" %}
+
+{% block head_title %}{{ instance.title }} | {{ block.super }}{% endblock head_title %}
+
+{% block content %}
+<div class = 'col-sm-6 col-sm-offset-3'>
+{% if object_instance.image %}
+<img src = '{{ object_instance.image.url }}' class = 'img-responsive' />
+
+{% endif %}
+<h1> {{ title }}</h1>
+<a href = ' {{ request.path }}edit-post/'> <input type = 'submit' value = 'Edit' /></a> <a href = '{{ request.path }}delete-post/''> <input type = 'submit' value = 'Delete' /></a>
+
+{% if user.is_active %}<h3> <p>Author: {{object_instance.author}}</p></h3> {% endif %}</br>
+<h4> Date Published: {{object_instance.publish}} </h4> </br>
+{{ object_instance.content|linebreaks }}</br>
+<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+<div class="fb-comments" data-href="{{ request.build_absolute_url }}" data-numposts="5"></div>
+
+</div>
+{% endblock content %}
