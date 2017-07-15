@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
 from .forms import PostForm
 from .models import Post
-from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.db.models import Q
@@ -14,19 +12,29 @@ from django.db.models import Q
 	
 #POSTS LISTS
 def post_list(request):
-	html =''
+	query2 = request.POST.get("sort",False)
+	print(query2)
 	list_posts = Post.objects.all()
-	query = request.GET.get("query")
-	if query:
+	user_posts = Post.objects.all()
+	user_posts = user_posts.filter(
+		Q(author__contains=request.user.username)
+		).distinct()
+
+	if 'search_submit' in request.POST:
+		query = request.POST.get("search")
 		list_posts = list_posts.filter(
-		
 		Q(title__icontains = query)|
 		Q(content__icontains = query)|
 		Q(author__contains = query)|
 		Q(publish__icontains = query)
 		).distinct()
-		
-	paginator = Paginator(list_posts, 10) 
+
+	if query2 == "Author":
+		list_posts = Post.objects.order_by('author')
+	if query2 == "Date":
+		list_posts = Post.objects.order_by('publish')
+
+	paginator = Paginator(list_posts, 5)
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
 		
@@ -39,13 +47,13 @@ def post_list(request):
 	
 	context = {
 	"list_posts": get_post,
+	"user_posts": user_posts,
 	"title": "Django Blogs Gaming",
 	"page_request_var": page_request_var,
 
 	}
 	return render(request, "post_list.html", context)
-	
-		
+
 #POSTS DETAILS
 def post_detail(request, id = None):
 	obj_instance = get_object_or_404(Post, id = id)
@@ -68,10 +76,9 @@ def post_create(request):
 	
 	if createform.is_valid():
 		obj_instance = createform.save(commit = False)
-		obj_instance.author = request.user
+		obj_instance.author = request.user.username
 		obj_instance.save()
-		messages.success(request, "POST SUCCESSFULLY CREATED")
-		return HttpResponseRedirect('/posts')
+		return HttpResponseRedirect('/posts/')
 		
 	return render(request, "post_form.html", context)
 
@@ -86,7 +93,6 @@ def post_update(request, id = None):
 	if createform.is_valid():
 		obj_instance = createform.save(commit = False)
 		obj_instance.save()
-		messages.success(request, "POST SUCCESSFULLY UPDATED")
 		return HttpResponseRedirect(obj_instance.get_absolute_url())
 	
 	context = {
@@ -103,14 +109,14 @@ def post_delete(request, id = None):
 		
 	obj_instance = get_object_or_404(Post, id = id)
 	obj_instance.delete()
-	messages.success(request, "POST SUCCESSFULLY DELETED")
 	return redirect("posts:list")
 	
-#PAGINATION
-def listing(request):
-    contact_list = Contacts.objects.all()
 
-    return render(request, 'list.html', {'contacts': contacts})
+#AJAX CALLS
+def AjaxSearch(request):
+	if request.method == 'POST':
+		search  = request.POST.get("search",False);
+	print("GAGO MAMAM MAOISJHASHUAIHSNUAHSUIHASIUHASIO")
 
 
 

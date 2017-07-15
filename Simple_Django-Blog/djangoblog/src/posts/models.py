@@ -14,7 +14,8 @@ class Post(models.Model):
 	update = models.DateTimeField(auto_now=True,auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False,auto_now_add=True)
 	publish = models.DateField(auto_now = False, auto_now_add = False)
-	
+	comment = models.ForeignKey('Comment', null = True)
+
 	def __unicode__(self):
 		return self.title
 		
@@ -27,3 +28,20 @@ class Post(models.Model):
 	class Meta:
 		ordering = ["-timestamp", "-update"]
 		
+class Comment(models.Model):
+	content = models.TextField(null = True)
+	timestamp = models.DateTimeField(null = True)
+	author = models.CharField(max_length=120, null = True)
+
+	parent = models.ForeignKey('self', null=True, blank=True)
+
+	def get_children(self):
+		return Comment.objects.filter(parent=self)
+
+	def __unicode__(self):
+		return self.user.username
+
+	def __str__(self):
+		return self.user.username
+
+

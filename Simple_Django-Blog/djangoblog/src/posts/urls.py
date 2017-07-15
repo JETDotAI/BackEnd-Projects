@@ -28,7 +28,8 @@ urlpatterns = [
     
     #/posts/id/update
 	url(r'^(?P<id>\d+)/edit-post/$', views.post_update, name = 'update'),
-	
 	url(r'^(?P<id>\d+)/delete-post/$', views.post_delete, name = 'delete'),
-   
+
+    #Ajax Calls
+    url(r'^ajax/search/$', views.AjaxSearch),
 ]

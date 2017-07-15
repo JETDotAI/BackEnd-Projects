@@ -1,13 +1,84 @@
-{%extends "base.html" %}
+<html>
 
+	<title>Django Comet</title>
+	<head>
+		<link rel="stylesheet" href="../static/css/textillate-master/assets/animate.css">
+		<link type="text/css" rel="stylesheet" href="style.css" />
+		<link rel="shortcut icon" href="../static/pictures/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="../static/pictures/favicon.ico" type="image/x-icon">
+		<link rel = 'stylesheet' href = "../static/css/login.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="fb-header-base"></div>
+
+		<div class="fb-header">
+			<div id="img1" class="fb-header"><a href = '/posts/'><img src="../static/pictures/comet.png" height = 70 width = 220 /></a></div>
+			 	<form  method = 'POST' id = "login" action = ''>{% csrf_token %}
+					<div id="form1" class="fb-header">Email Address<br>
+					<input class ="form-control" placeholder="Email Address" type="username" name="username" required /><br>
+					</div>
+					<div id="form2" class="fb-header">Password<br>
+					<input class ="form-control" placeholder="Password" type="password" name="password" required/><br>
+					</div>
+					<button type="submit" class="submit1" name = "login">Log in</button>
+			 	</form>
+
+		</div>
+		<div class="fb-body">
+			<img  class="fb-body" id="img3" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Moon_rotating_full_220px.gif"/>
+			<div data-in-effect="wobble" class="fb-body intro_word"><!--data-in-effect="wobble"-->COMET helps you connect and share with awesome people </div>
+			<div id="night-view"></div>
+			<div id="intro2" class="fb-body">Create an account</div>
+			<div id="img2" class="fb-body"><img height = 650  width= 1300 style = "opacity: 0.5; filter: alpha(opacity=30); " src="../static/pictures/world2.png" /></div>
+			<div id="intro3" class="fb-body">It's free and always will be.</div>
+			<div id="form3" class="fb-body">
+				<form  method = 'POST' action = ''>{% csrf_token %}
+					<input placeholder="First Name" type="text" id="namebox" name="new_first_name" required/>
+					<input placeholder="Last Name" type="text" id="namebox" name="new_last_name" required/> <br>
+					<input placeholder="Email Address" type="text" id="mailbox1" name="new_email" required/><br>
+					<input placeholder="Re-enter email" type="text" id="mailbox2" name="valid_new_email" required/><br>
+					<input placeholder="Password" type="password" id="password1" name="new_password" required/><br>
+					<input placeholder="Re-enter password" type="password" id="password2" name="valid_new_password" required/><br><hr style="border-top: 3px solid darkslategrey;">
+					<p id="intro4"><b>By clicking Create Account, you agree to our Terms and that you have read our Data Policy, including our Cookie Use. You may receive SMS Notifications from Comet and can opt out at any time.</b></p>
+					<input type="submit" class="button2" value="Create an account" name = "registration"/>
+					<br><hr style="border-top: 3px solid darkslategrey;">
+					<p id="intro5">Create a Page for a celebrity, band or business.</p>
+				</form>
+
+			</div>
+
+		</div>
+		<div class="fb-body-footer"></div>
+
+ 	<script src="../static/js/input_validation.js"></script>
+ 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src = "./static/css/textillate-master/jquery.textillate.js"></script>
+    <script src = "./static/css/textillate-master/assets/jquery.lettering.js"></script>
+    <script>
+		$(function() {
+			$('.intro_word').textillate();
+		})
+    </script>
+	</body>
+
+</html>
+
+<!--
 {% block content %}
 <div class = 'col-sm-6 col-sm-offset-3'>
-<h1> {{ title }} </h1>
+	<div  class="panel panel-default">
+		<div class="panel-heading"><h1> DJANGO BLOG {{title}}</h1></div>
+
 <hr/>
 <form method = 'POST' action = '' enctype = 'multipart/form-data'>{% csrf_token %}
+
 	{{form.as_p}}
-	<input type = 'submit' class = 'btn btn default' value = '{{ title }}' />
+	<input type = 'submit' class = 'btn btn-success' value = "Submit" />
+
 </form>
+	</div>
 </div>
 {% endblock content %}
-
+-->

@@ -1,21 +1,75 @@
 {%extends "base.html" %}
 
 {% block head_title %}{{ instance.title }} | {{ block.super }}{% endblock head_title %}
-
+{% load staticfiles %}
 {% block content %}
-<div class = 'col-sm-6 col-sm-offset-3'>
-{% if object_instance.image %}
-<img src = '{{ object_instance.image.url }}' class = 'img-responsive' />
+<div class = "col-md-2 col-sm-2 col-xs-2"></div>
+<div class = "col-md-6 col-sm-6 col-xs-6">
+    <div class="panel panel-default">
+        <div class ="panel-heading"><h1 style="font-family: Courier; font-size:40px;"> {{ title }}</h1></div>
+        <div class ="panel-body">
 
-{% endif %}
-<h1> {{ title }}</h1>
-<a href = ' {{ request.path }}edit-post/'> <input type = 'submit' value = 'Edit' /></a> <a href = '{{ request.path }}delete-post/''> <input type = 'submit' value = 'Delete' /></a>
 
-{% if user.is_active %}<h3> <p>Author: {{object_instance.author}}</p></h3> {% endif %}</br>
-<h4> Date Published: {{object_instance.publish}} </h4> </br>
-{{ object_instance.content|linebreaks }}</br>
-<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-<div class="fb-comments" data-href="{{ request.build_absolute_url }}" data-numposts="5"></div>
+            {% if object_instance.image %}
+                <img src = '{{ object_instance.image.url }}' height = 1000 width = 500 align = "middle" class="img-responsive center-block" />
+            {% else %}
+                <img src="http://placehold.it/900x300" class="img-responsive center-block">
+            {% endif %}
+            <hr>
+            <a href = ' {{ request.path }}edit-post/'> <input type = 'submit' value = 'Edit' /></a> <a href = '{{ request.path }}delete-post/''> <input type = 'submit' value = 'Delete' /></a>
+
+            {% if user.is_active %}<h3> <p>Author: {{object_instance.author}}</p></h3> {% endif %}</br>
+            <h4> Date Published: {{object_instance.publish}} </h4> </br>
+            {{ object_instance.content|linebreaks }}</br>
+        </div>
+        <div class = "panel-footer">
+            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+            <div class="fb-comments" data-href="{{ request.build_absolute_url }}" data-numposts="5"></div>
+        </div>
+
+    </div>
+
+</div>
+<div class="col-md-2 col-sm-2 col-xs-2 " style = "background-color: #4d4d4d; ">
+     </br>
+
+     <div class="well text-center">
+            <p class="lead">
+                Don't want to miss updates? Please click the below button!
+            </p>
+         <a style = "font-family: 'Source Code Pro'; font-size: 18px; href="https://www.linkedin.com/in/john-edel-tamani-9a8478131/"><b>Subscribe to my feed</b></a>
+     </div>
+     <hr>
+     <div style="width:100%;height:0;padding-bottom:115%;position:relative;"><iframe src="https://giphy.com/embed/jxxZgq4DA6E92" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/mark-zuckerberg-jxxZgq4DA6E92">via GIPHY</a></p>
+     <hr>
+     <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 style="font-family: 'Source Code Pro'; color:green; "><b>Popular Blog Sites</b></h4>
+        </div>
+        <ul class="list-group">
+            <li style="font-family:Lato; font-size: 18px" class="list-group-item"><a href="https://wordpress.com/"><img src = '{% static "/pictures/wordpress.png" %}' width = 40 height = 40/>Wordpress.com</a></li>
+            <li style="font-family:Lato; font-size: 18px" class="list-group-item"><a href="https://www.tumblr.com/"><img src = '{% static "/pictures/tumblr.png" %}' width = 40 height = 30/>Tumblr</a></li>
+            <li style="font-family:Lato; font-size: 18px" class="list-group-item"><a href="https://www.weebly.com/"><img src = '{% static "/pictures/weebly.png" %}' width = 40 height = 30/>Weebly</a></li>
+            <li style="font-family:Lato; font-size: 18px" class="list-group-item"><a href="https://www.blogger.com/about/?r=2"><img src = '{% static "/pictures/blogger.png" %}' width = 40 height = 30/>Blogger</a></li>
+            <li style="font-family:Lato; font-size: 18px" class="list-group-item"><a href="https://www.wix.com/"><img src = '{% static "/pictures/wix.png" %}' width = 40 height = 30/>Wix</a></li>
+        </ul>
+    </div>
+     <hr>
+     <div style="width:100%;height:0;padding-bottom:80%;position:relative;"align="center"><iframe align="center" src="http://widget.calendarlabs.com/v1/quot.php?cid=101&uid=801236995&c=random&l=en&cbg=000000&cb=2&cbc=FFFFFF&cf=calibri&cfg=FFFFFF&qfs=bi&qta=right&tfg=FFFFFF&tfs=bi&afc=FFFFFF&afs=i" width="188" height="210" marginwidth=0 marginheight=0 frameborder=0 scrolling=no allowtransparency='true'>Loading...</iframe><div align="center" style="width:140px;font-size:10px;color:#333;">Daily Quotes by <a href="https://www.calendarlabs.com/" target="_blank" rel="nofollow" style="font-size:10px;text-decoration:none;color:#333;">CalendarLabs</a></div></div><!-------Do not change above this line------->
+     <hr>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 style="font-family: 'Source Code Pro'; color:green;"><b>Recent Comments</b></h4>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="#">I don't believe in astrology but still your writing style is really great! - <em>john</em></a></li>
+            <li class="list-group-item"><a href="#">Wow.. what you said is really true! I'm an aries though - <em>Anto</em></a></li>
+            <li class="list-group-item"><a href="#">Does capricorn and aries is compatibile? - <em>Sarah</em></a></li>
+            <li class="list-group-item"><a href="#">I'm a cancer woman been in love with Leo. Will this work? - <em>Mary</em></a></li>
+        </ul>
+    </div>
+    <hr>
 
 </div>
 {% endblock content %}
